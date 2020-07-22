@@ -1,29 +1,96 @@
-import React from 'react'
+import React,{Fragment} from 'react'
 import {
   BrowserRouter as Router,
   Route,
+  Switch,
+  Redirect
 } from "react-router-dom";
-
-import Layout from './../components/Layout.js'
-import Example2 from './../components/Example2.js'
-import Example3 from './../components/Example3.js'
-import Login from './../components/containers/Login'
-
+import {
+	CircularProgress,
+	Grid,
+	Typography,
+	Box,
+	makeStyles,
+} from '@material-ui/core';
+import {loginAccion} from './../ducks/userDuck.js'
 import {Provider} from 'react-redux'
-import generateStore from './../ducks/store'
+import generateStore from './../ducks/store';
 const store = generateStore();
 
+import Home from './../components/containers/Home'
+import Login from './../components/containers/Login'
+// start useStyles
+const useStyles = makeStyles((theme) => ({
+  spinning: {
+      marginLeft: theme.spacing(4),
+  },
+}));
+//end useStyles
 const Routes= () => {
+// start uses
+const classes = useStyles();
+const [login, setLogin] = React.useState(true)
+const [loading, setLoading] = React.useState(true)
+// const dispatch = useDispatch()
+// start uses
+React.useEffect(() => {
+    const fetchUser = async () => {
+	      const user = await JSON.parse(localStorage.getItem('user'))
+	      if(user){
+	      loginAccion(user)(store.dispatch)
+	      setLogin(true)
+	      setLoading(false)
+	      }else{
+		  	setLogin(false)
+		    setLoading(false)
+	      }
+    } 
+    fetchUser()
+  }, [])
+// start Components
+//start protegemos las rutas
+ const RouteProtec = ({component, path, ...rest}) => {
+    if(login){
+        console.log('acceso permitido')
+        return <Route component={component} path={path} {...rest} />
+    }else{
+      console.log('acceso denegado')
+      return <Redirect to="/login" {...rest} />
+    }
+  }
+//end protegemos las rutas
+// start Components
 	return (
+	<Fragment>
+  	{ 
+  		loading === true ? (
+  		<Grid
+		  container
+		  direction="row"
+		  justify="center"
+		  alignItems="center"
+			>
+		      <CircularProgress className={classes.spinning} />
+		      <Box mt={2} ml={2}>
+			      <Typography variant="h4" gutterBottom>
+			         Cargando...
+			      </Typography>
+		      </Box>
+		</Grid>
+		) : (
+	<Provider store={store}>
 		<Router>
-		    <Provider store={store}>
-		        <Route path="/" component={Layout} exact/>
-		        <Route path="/example2" component={Example2} exact/>
-		        <Route path="/example3" component={Example3} exact/>
-		        <Route path="/Login" component={Login} exact/>
-		    </Provider>
+			<Switch>	
+		       <Fragment>
+			        <RouteProtec path="/" component={Home} exact/>
+			        <Route path="/Login" component={Login} exact/>
+		       </Fragment>
+		    </Switch>
 		</Router>
-
+	</Provider>
+		)
+	}
+	</Fragment>
 	);
 }
 
