@@ -1,9 +1,11 @@
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 
+// Apply the middleware to the store
  import userDuck from './userDuck.js'
  const rootReducer = combineReducers ({
- 	user : userDuck
+ 	user : userDuck,
+
  })
 
  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -16,5 +16,6 @@
     <body>
         <div id="app"></div>
         <script src="{{ mix('js/app.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </body>
 </html>

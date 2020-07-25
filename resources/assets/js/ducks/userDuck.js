@@ -2,12 +2,18 @@
     const dataInicial = {
         loading: false,
         login: false,
-        data:{}
+        currentUserData:{},
+        session:{},
+        pass_recover:{
+            pass:false,
+            email:''
+        }
     }
 //end data inicial
 //start constantes
     const LOADING = 'LOADING'
     const USER_EXITO = 'USER_EXITO'
+    const USER_PASS_RECOVER = 'USER_PASS_RECOVER'
     const USER_ERROR = 'USER_ERROR'
     const CERRAR_SESION = 'CERRAR_SESION'
 //end constantes
@@ -17,6 +23,11 @@
         switch(action.type){
             case LOADING:
                 return {...state, loading: true}
+            case USER_PASS_RECOVER:
+                return {...state, pass_recover:{
+                    pass:true,
+                    email:action.payload
+                }}
             case USER_ERROR:
                 return {...dataInicial}
             case USER_EXITO:
@@ -31,7 +42,6 @@
 //start actions//
 //start login
 export const loginAccion = (payload) => async(dispatch) => {
-    console.log(payload)
     dispatch({
             type: USER_EXITO,
             payload: {
@@ -51,11 +61,34 @@ export const loginAccion = (payload) => async(dispatch) => {
     }))
 }
 //end login
-//start login
-export const loadingAccion = () => async(dispatch) => {
+//start LOADING
+export const loadingAction = () => async(dispatch) => {
    dispatch({
         type: LOADING
     })
 }
-//end login
+//end LOADING
+//start CERRAR_SESION
+export const cerrarSessionAction = () => async(dispatch) => {
+   dispatch({
+        type: CERRAR_SESION
+    })
+   localStorage.removeItem('user');
+   localStorage.removeItem('pass_recover');
+
+}
+//end CERRAR_SESION
+//start password recover
+export const passwordRecoverAction = (payload) => async(dispatch) => {
+   dispatch({
+        type: USER_PASS_RECOVER,
+        payload: payload
+    })
+   localStorage.setItem('pass_recover', JSON.stringify({
+        pass:true,
+        email:payload
+    }))
+}
+//end password recover
 //end actions//
+

@@ -28,10 +28,15 @@
         "@material-ui/core": "^4.11.0",
         "@material-ui/icons": "^4.9.1",
         "@material-ui/lab": "^4.0.0-alpha.56",
+        "@sweetalert2/theme-borderless": "^3.2.0",
+        "history": "^5.0.0",
         "react-hook-form": "^6.0.8",
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.2.0",
+        "react-router-redux": "^4.0.8",
         "redux": "^4.0.5",
-        "redux-thunk": "^2.3.0"
+        "redux-thunk": "^2.3.0",
+        "sweetalert2": "^9.17.0",
+        "sweetalert2-react": "^0.8.3"
     }
 }

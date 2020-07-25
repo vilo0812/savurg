@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
-import BoxLogin from './../../boxes/BoxLogin.jsx'
+import LoginRoute from './../../../Routes/LoginRoute.jsx'
+import {useDispatch} from 'react-redux'
+import {loadingAction} from './../../../ducks/userDuck.js'
 import {
     Card,
     CardMedia,
@@ -43,39 +45,41 @@ import {
   },
   }))
 //end useStyles
-function Login() {
+const Login = ({history}) => {
   //start uses
   const classes = useStyles()
+  const dispatch = useDispatch()
 //start uses
 // start elements
+//start Copyright
+const Copyright = (
+<>
+  <Typography align="center" variant="caption" display="block" gutterBottom>
+    Copyright SAVURG 2020.
+  </Typography>
+</>
+);
+//end Copyright
 //start aditional actions
 const actionsButtons = (
 <>
   <Grid
     container
-    direction="row"
-    justify="space-evenly"
-    alignItems="flex-start"
+    direction="column"
+    justify="center"
+    alignItems="center"
     >
-      <Button className={classes.btnActions} size="small">
-        ¿olvidaste tú contraseña? 
-      </Button>
-      <Button className={classes.btnActions} size="small">
-          Registrate
-      </Button>
+    <Button onClick={() => location.href="/auth/recoverpassword"} className={classes.btnActions} size="small">
+      ¿olvidaste tú contraseña? 
+    </Button>
+    <Button onClick={() => location.href="/auth/register"} className={classes.btnActions} size="small">
+        Registrate
+    </Button>
+    
   </Grid>
 </>
 );
 //end aditional actions
-//start Copyright
-const Copyright = (
-<>
-  <Typography  align="center" variant="caption" display="block" gutterBottom>
-    Copyright 2020.
-  </Typography>
-</>
-);
-//end Copyright
 //start card Login element
 const cardLogin = (
 <>  <Grid 
@@ -101,18 +105,10 @@ const cardLogin = (
             <Typography  align="center" variant="body2" color="textSecondary" component="p">
               Sistema de Aula Virtual para la Universidad Rómulo Gallegos
             </Typography>
-            <BoxLogin></BoxLogin>
+            <LoginRoute history={history}></LoginRoute>
+              {Copyright}
           </CardContent>
       </Grid>
-        <Grid 
-        item
-        xs={12}>
-           <CardActions>
-              {actionsButtons}
-          </CardActions>
-        </Grid>
-      <br/>
-      {Copyright}
     </Grid>
 </>
 );

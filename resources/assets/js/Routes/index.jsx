@@ -1,9 +1,9 @@
 import React,{Fragment} from 'react'
 import {
-  BrowserRouter as Router,
+ BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import {
 	CircularProgress,
@@ -51,11 +51,9 @@ React.useEffect(() => {
 //start protegemos las rutas
  const RouteProtec = ({component, path, ...rest}) => {
     if(login){
-        console.log('acceso permitido')
         return <Route component={component} path={path} {...rest} />
     }else{
-      console.log('acceso denegado')
-      return <Redirect to="/login" {...rest} />
+      return <Redirect to="/auth" {...rest} />
     }
   }
 //end protegemos las rutas
@@ -81,10 +79,8 @@ React.useEffect(() => {
 	<Provider store={store}>
 		<Router>
 			<Switch>	
-		       <Fragment>
-			        <RouteProtec path="/" component={Home} exact/>
-			        <Route path="/Login" component={Login} exact/>
-		       </Fragment>
+		        <RouteProtec path="/" component={Home} exact/>
+		        <Route path="/auth" component={Login} />
 		    </Switch>
 		</Router>
 	</Provider>

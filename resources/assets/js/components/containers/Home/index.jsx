@@ -1,5 +1,8 @@
-import React from 'react'
+import React,{Fragment} from 'react'
+import {useDispatch} from 'react-redux'
+import {cerrarSessionAction} from './../../../ducks/userDuck.js'
 import {
+    Button,
     makeStyles,
 } from '@material-ui/core'
 import {
@@ -12,12 +15,27 @@ import {
   	}
   }))
 //end useStyles
-const Home = () => {
+const Home = ({history}) => {
+  //start uses
+  const dispatch = useDispatch();
+  //end uses
+ // start methods
+  const logout = () => {
+    dispatch(cerrarSessionAction())
+    history.push('/auth')
+  }
+// end methods
 //start uses
 	const classes = useStyles()
 //start uses
    return(
-       <h1 className={classes.fondo}>Home</h1>
+    <Fragment>
+             <h1 className={classes.fondo}>Home 
+             </h1>
+            <Button variant="contained" onClick={()=>logout()}>
+              Link
+            </Button>
+    </Fragment>
    );
 
 }
