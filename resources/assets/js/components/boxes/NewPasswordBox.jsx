@@ -168,7 +168,6 @@ const validation = () => {
             password:inputs.clave,
             email:email
           };
-          console.log(data)
           const res = await axios.put('/api/auth/newPassword',data);
           setLoading(false)
           dispatch(cerrarSessionAction())
