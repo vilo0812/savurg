@@ -28,7 +28,7 @@ import {
       height : '720px',
     },
     cardImg:{
-      backgroundImage : "url('./../../images/backgrounds/notes_pc.jpg')",
+      backgroundImage : "url('./../../images/backgrounds/fondo.jpg')",
       backgroundSize:'cover',
       backgroundPosition: 'center',
     },
